@@ -1,0 +1,22 @@
+#!/bin/bash
+
+#SBATCH -p RM-shared
+#SBATCH -t 24:00:00
+#SBATCH --mem 1999M
+#SBATCH -n 16
+#SBATCH --account bio230007p
+#SBATCH -J tissues_human
+#SBATCH -e /ocean/projects/bio230007p/jhyun/tissues_human.err
+#SBATCH -o /ocean/projects/bio230007p/jhyun/tissues_human.bed
+#SBATCH --export=ALL
+
+#echo commands to stdout
+set -x
+
+module load bedtools/2.30.0 
+
+bedtools intersect \
+-a /ocean/projects/bio230007p/jhyun/narrowpeaks/liver_human/idr.conservative_peak.narrowPeak.gz \
+-b /ocean/projects/bio230007p/jhyun/narrowpeaks/pancreas_human/idr.conservative_peak.narrowPeak.gz \
+-u
+
