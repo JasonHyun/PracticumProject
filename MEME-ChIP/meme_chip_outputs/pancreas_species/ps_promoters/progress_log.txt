@@ -1,0 +1,62 @@
+Invoking:
+  getsize ps_promoters/pancreas_species_promoters_uniq.fa 1> $metrics
+Finished invoke:
+  name: count_seqs  status: 0  time: 0.048494
+Invoking:
+  fasta-most -min 50 < ps_promoters/pancreas_species_promoters_uniq.fa 1> $metrics
+Finished invoke:
+  name: most_seqs  status: 0  time: 0.047942
+Invoking:
+  fasta-center -dna -len 100 < ps_promoters/pancreas_species_promoters_uniq.fa 1> ps_promoters/seqs-centered
+Finished invoke:
+  name: center_seqs  status: 0  time: 0.056495
+Invoking:
+  fasta-get-markov -nostatus -nosummary -dna -m 2 ps_promoters/pancreas_species_promoters_uniq.fa ps_promoters/background
+Finished invoke:
+  name: bg  status: 0  time: 0.009558
+Invoking:
+  meme ps_promoters/seqs-centered -oc ps_promoters/meme_out -mod zoops -nmotifs 3 -minw 6 -maxw 20 -bfile ps_promoters/background -dna -revcomp -nostatus
+Finished invoke:
+  name: meme  status: 0  time: 630.774798
+Invoking:
+  streme --verbosity 1 --oc ps_promoters/streme_out -dna --p ps_promoters/seqs-centered --minw 6 --maxw 20 --order 2
+Finished invoke:
+  name: streme  status: 0  time: 7.439202
+Invoking:
+  centrimo -seqlen 799 -verbosity 1 -oc ps_promoters/centrimo_out -bfile ps_promoters/background ps_promoters/pancreas_species_promoters_uniq.fa ps_promoters/meme_out/meme.xml ps_promoters/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: centrimo  status: 256  time: 0.607745
+Invoking:
+  tomtom -verbosity 1 -oc ps_promoters/meme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc ps_promoters/meme_out/meme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: meme_tomtom  status: 0  time: 16.391428
+Invoking:
+  tomtom -verbosity 1 -oc ps_promoters/streme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc ps_promoters/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: streme_tomtom  status: 0  time: 5.635699
+Invoking:
+  tomtom -verbosity 1 -text -thresh 0.1 ps_promoters/combined.meme ps_promoters/combined.meme 1> ps_promoters/motif_alignment.txt
+Finished invoke:
+  name: align  status: 0  time: 0.069571
+Invoking:
+  spamo -verbosity 1 -oc ps_promoters/spamo_out_1 -bgfile ps_promoters/background -keepprimary -primary GGCSGSGGCGGSGSSGGCGG ps_promoters/pancreas_species_promoters_uniq.fa ps_promoters/meme_out/meme.xml ps_promoters/meme_out/meme.xml ps_promoters/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.547345
+Invoking:
+  spamo -verbosity 1 -oc ps_promoters/spamo_out_1 -bgfile ps_promoters/background -keepprimary -primary TTTKWTYKTTTKBTW ps_promoters/pancreas_species_promoters_uniq.fa ps_promoters/meme_out/meme.xml ps_promoters/meme_out/meme.xml ps_promoters/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.286836
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_promoters/fimo_out_1 --bgfile ps_promoters/background --motif GGCSGSGGCGGSGSSGGCGG ps_promoters/meme_out/meme.xml ps_promoters/pancreas_species_promoters_uniq.fa
+Finished invoke:
+  name: fimo1  status: 0  time: 0.215395
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_promoters/fimo_out_2 --bgfile ps_promoters/background --motif TTTKWTYKTTTKBTW ps_promoters/meme_out/meme.xml ps_promoters/pancreas_species_promoters_uniq.fa
+Finished invoke:
+  name: fimo2  status: 0  time: 0.196534
+Writing output
+Invoking:
+  meme-chip_html_to_tsv ps_promoters/meme-chip.html ps_promoters/summary.tsv "meme-chip -oc ps_promoters -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_promoters_uniq.fa" 5.4.1 "Sat Aug 21 19\:23\:23 2021 -0700"
+Finished invoke:
+  name: summary  status: 0  time: 0.08966
+Done

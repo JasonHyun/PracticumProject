@@ -1,0 +1,8 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	MEME	GGCSGSGGCGGSGSSGGCGG	MEME-1	GGCSGSGGCGGSGSSGGCGG	20	101	2.4e-076	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA1833.1 (Zm00001d049364)	http://jaspar.genereg.net/matrix/MA1833.1
+2	MEME	GRGRRKGGGRAGGRGGVRG	MEME-3	GRGRRKGGGRAGGRGGVRG	19	82	4.0e-032	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA0528.2 (ZNF263)	http://jaspar.genereg.net/matrix/MA0528.2
+3	MEME	TTTKWTYKTTTKBTW	MEME-2	TTTKWTYKTTTKBTW	15	36	3.1e-022	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA1274.1 (DOF3.6)	http://jaspar.genereg.net/matrix/MA1274.1
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc ps_promoters -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_promoters_uniq.fa

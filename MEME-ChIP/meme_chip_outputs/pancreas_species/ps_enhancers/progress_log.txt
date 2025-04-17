@@ -1,0 +1,78 @@
+Invoking:
+  getsize ps_enhancers/pancreas_species_enhancers_uniq.fa 1> $metrics
+Finished invoke:
+  name: count_seqs  status: 0  time: 0.057001
+Invoking:
+  fasta-most -min 50 < ps_enhancers/pancreas_species_enhancers_uniq.fa 1> $metrics
+Finished invoke:
+  name: most_seqs  status: 0  time: 0.057091
+Invoking:
+  fasta-center -dna -len 100 < ps_enhancers/pancreas_species_enhancers_uniq.fa 1> ps_enhancers/seqs-centered
+Finished invoke:
+  name: center_seqs  status: 0  time: 0.076549
+Invoking:
+  fasta-get-markov -nostatus -nosummary -dna -m 2 ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/background
+Finished invoke:
+  name: bg  status: 0  time: 0.018285
+Invoking:
+  meme ps_enhancers/seqs-centered -oc ps_enhancers/meme_out -mod zoops -nmotifs 3 -minw 6 -maxw 20 -bfile ps_enhancers/background -dna -revcomp -nostatus
+Finished invoke:
+  name: meme  status: 0  time: 1029.713272
+Invoking:
+  streme --verbosity 1 --oc ps_enhancers/streme_out -dna --p ps_enhancers/seqs-centered --minw 6 --maxw 20 --order 2
+Finished invoke:
+  name: streme  status: 0  time: 23.821732
+Invoking:
+  centrimo -seqlen 371 -verbosity 1 -oc ps_enhancers/centrimo_out -bfile ps_enhancers/background ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/meme_out/meme.xml ps_enhancers/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: centrimo  status: 256  time: 0.651608
+Invoking:
+  tomtom -verbosity 1 -oc ps_enhancers/meme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc ps_enhancers/meme_out/meme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: meme_tomtom  status: 0  time: 17.285202
+Invoking:
+  tomtom -verbosity 1 -oc ps_enhancers/streme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc ps_enhancers/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: streme_tomtom  status: 0  time: 9.45718
+Invoking:
+  tomtom -verbosity 1 -text -thresh 0.1 ps_enhancers/combined.meme ps_enhancers/combined.meme 1> ps_enhancers/motif_alignment.txt
+Finished invoke:
+  name: align  status: 0  time: 0.118438
+Invoking:
+  spamo -verbosity 1 -oc ps_enhancers/spamo_out_1 -bgfile ps_enhancers/background -keepprimary -primary RSYGCCMYCTRSTGG ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/meme_out/meme.xml ps_enhancers/meme_out/meme.xml ps_enhancers/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.780789
+Invoking:
+  spamo -verbosity 1 -oc ps_enhancers/spamo_out_1 -bgfile ps_enhancers/background -keepprimary -primary AAAAAARAAAAAAAAARMAA ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/meme_out/meme.xml ps_enhancers/meme_out/meme.xml ps_enhancers/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.406421
+Invoking:
+  spamo -verbosity 1 -oc ps_enhancers/spamo_out_1 -bgfile ps_enhancers/background -keepprimary -primary GSSGSVGSSSGGSGSSGSSS ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/meme_out/meme.xml ps_enhancers/meme_out/meme.xml ps_enhancers/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.854816
+Invoking:
+  spamo -verbosity 1 -oc ps_enhancers/spamo_out_1 -bgfile ps_enhancers/background -keepprimary -primary 2-GYAAAYA ps_enhancers/pancreas_species_enhancers_uniq.fa ps_enhancers/streme_out/streme.xml ps_enhancers/meme_out/meme.xml ps_enhancers/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.584588
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_enhancers/fimo_out_1 --bgfile ps_enhancers/background --motif RSYGCCMYCTRSTGG ps_enhancers/meme_out/meme.xml ps_enhancers/pancreas_species_enhancers_uniq.fa
+Finished invoke:
+  name: fimo1  status: 0  time: 0.371825
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_enhancers/fimo_out_2 --bgfile ps_enhancers/background --motif AAAAAARAAAAAAAAARMAA ps_enhancers/meme_out/meme.xml ps_enhancers/pancreas_species_enhancers_uniq.fa
+Finished invoke:
+  name: fimo2  status: 0  time: 0.382333
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_enhancers/fimo_out_3 --bgfile ps_enhancers/background --motif GSSGSVGSSSGGSGSSGSSS ps_enhancers/meme_out/meme.xml ps_enhancers/pancreas_species_enhancers_uniq.fa
+Finished invoke:
+  name: fimo3  status: 0  time: 0.468715
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc ps_enhancers/fimo_out_4 --bgfile ps_enhancers/background --motif 2-GYAAAYA ps_enhancers/streme_out/streme.xml ps_enhancers/pancreas_species_enhancers_uniq.fa
+Finished invoke:
+  name: fimo4  status: 0  time: 0.305649
+Writing output
+Invoking:
+  meme-chip_html_to_tsv ps_enhancers/meme-chip.html ps_enhancers/summary.tsv "meme-chip -oc ps_enhancers -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_enhancers_uniq.fa" 5.4.1 "Sat Aug 21 19\:23\:23 2021 -0700"
+Finished invoke:
+  name: summary  status: 0  time: 0.118954
+Done

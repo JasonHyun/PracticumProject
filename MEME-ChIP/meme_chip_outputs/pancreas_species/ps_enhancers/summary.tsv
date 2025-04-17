@@ -1,0 +1,10 @@
+MOTIF_INDEX	MOTIF_SOURCE	MOTIF_ID	ALT_ID	CONSENSUS	WIDTH	SITES	E-VALUE	E-VALUE_SOURCE	MOST_SIMILAR_MOTIF_SOURCE	MOST_SIMILAR_MOTIF	URL
+1	MEME	RSYGCCMYCTRSTGG	MEME-1	RSYGCCMYCTRSTGG	15	555	2.1e-341	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA0139.1 (CTCF)	http://jaspar.genereg.net/matrix/MA0139.1
+2	MEME	AAAAAARAAAAAAAAARMAA	MEME-2	AAAAAARAAAAAAAAARMAA	20	76	6.4e-039	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA1268.1 (CDF5)	http://jaspar.genereg.net/matrix/MA1268.1
+3	MEME	GSSGSVGSSSGGSGSSGSSS	MEME-3	GSSGSVGSSSGGSGSSGSSS	20	141	4.9e-015	MEME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA1961.1 (PATZ1)	http://jaspar.genereg.net/matrix/MA1961.1
+4	STREME	1-CCASYAGRKGGCRSYV	STREME-1	CCASYAGRKGGCRSYV	16	508	1.4e-010	STREME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA1930.1 (CTCF)	http://jaspar.genereg.net/matrix/MA1930.1
+5	STREME	2-GYAAAYA	STREME-2	GYAAAYA	7	315	2.8e-002	STREME	/ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt	MA0546.1 (pha-4)	http://jaspar.genereg.net/matrix/MA0546.1
+
+# MEME-ChIP (Motif Analysis of Large Nucleotide Datasets): Version 5.4.1 released on Sat Aug 21 19:23:23 2021 -0700
+# The format of this file is described at https://meme-suite.org/meme//doc/meme-chip-output-format.html
+# meme-chip -oc ps_enhancers -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_enhancers_uniq.fa
