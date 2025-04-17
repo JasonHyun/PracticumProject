@@ -22,11 +22,14 @@ An online tool, GREAT, was used to apply functional enrichment analysis. The ope
 Currently work in progress; the group is working to convert .bed files to .fasta to process inputs for MEME suite and derive corresponding outputs for further analyses.
 
 ## Tools
+NOTE: the use of the packages as HALPER, bedtools, and MEME Suite are done through the modules of the cluster; we did not install dependencies to our local devices.
 - HALPER (https://github.com/pfenninglab/halLiftover-postprocessing)
 - bedtools (https://bedtools.readthedocs.io/en/latest/)
 - GREAT (https://great.stanford.edu/great/public/html/)
 - MEME Suite (https://meme-suite.org/meme/)
-NOTE: the use of the packages as HALPER, bedtools, and MEME Suite are done through the modules of the cluster; we did not install dependencies to our local devices.
+
+  
+
 
 ## Contributors
 Jason Hyun, Jessica Vu, Deyuan Xu, June Qu
