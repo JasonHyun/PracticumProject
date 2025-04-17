@@ -4,24 +4,29 @@
 This is a project for the course 03713: Bioinformatics Data Integration Practicum from Carnegie Mellon University, with purpose of analyzing open chromatin regions across species of human and mouse. The project aims to evaluate the extent of conservation of involved regulatory elements across species and tissues, and to understand how these conserved regions may influence tissue-specific gene regulation. 
 
 ## Workflow
+<img width="452" alt="pipeline_design" src="https://github.com/user-attachments/assets/1ad958dc-a9ed-4cbf-944c-b763f1eae44a" />
 
+### Step 1: Obtaining raw peak data and QC reports analyses:
+The original datasets for alternate adrenal gland, liver, and pancreas tissues were provided as conservative peak files of ATAC-Seq from the project pathway of bridges2. These are also available under the data folder in the repository, along with respective QC reports that contributed to data quality assessments of the three tissues. Because the criteria of the project suggests to work with data of two tissues of highest integrity, the data for adrenal gland has been discarded.
 
-<img width="1440" alt="Screenshot 2025-04-16 at 10 11 25 PM" src="https://github.com/user-attachments/assets/2cb0ea41-148b-4420-ac51-17468663a215" />
-Mapping mouse open chromatin regions to human:
+### Step 2: Mapping mouse open chromatin regions to human using HALPER:
 The narrowpeak files containing mouse open chromatin regions were loaded into HALPER to map to human genome. At this step, HALPER tasks were submitted to and run on an RM-Shared node in PSC (Pittsburgh Supercomputing Center). For better computating efficiency, 16 cores and 32GB memory were requested. The open chromatin regions in mouse liver and pancreas were mapped into human genome.
 
-Functional Enrichment Analysis:
-An online tool, GREAT, was used to apply functional enrichment analysis. The open chromatin regions that were, respectively, unique to organs or organisms, conservative across organs or organisms, were put into GREAT for obtaining GO terms where the peaks enriched in.
+### Step 3: Intersection to derive overlapping and unique regions:
+Each combination of mapped regions of mouse liver and pancreas are compared with their respective tissues in humans, specifically through use of bedtools. Two separate bins of batch of files yield results for overlapping regions and unique regions, respectively, between mouse and human. These outputs are then processed through Step 4. 
+
+### Step 4: Functional enrichment analysis:
+An online tool, GREAT, was used to apply functional enrichment analysis. The open chromatin regions that were, respectively, unique to organs or organisms, conservative across organs or organisms, were put into GREAT for obtaining GO terms where the peaks enriched in. The outputs can be found under the corresponding folder, which are utilized to distinguish promoters from enhancers based from TSS distance graphs.
+
+### Step 5: MEME Suite
+Currently work in progress; the group is working to convert .bed files to .fasta to process inputs for MEME suite and derive corresponding outputs for further analyses.
 
 ## Tools
 - HALPER (https://github.com/pfenninglab/halLiftover-postprocessing)
 - bedtools (https://bedtools.readthedocs.io/en/latest/)
-
 - GREAT (https://great.stanford.edu/great/public/html/)
 - MEME Suite (https://meme-suite.org/meme/)
-
-## Datasets
-The original narrowpeak datasets for alternate adrenal gland, liver, and pancreas tissues were provided as results of ATAC-Seq, along with their QC reports, from the project pathway of bridges2. These are also available under the data folder in the repository, along with respective QC reports that helped us conclude to leave out the alternative adrenal gland data in aim of using the two tissue data with best integrity and quality for the project.
+NOTE: the use of the packages as HALPER, bedtools, and MEME Suite are done through the modules of the cluster; we did not install dependencies to our local devices.
 
 ## Contributors
 Jason Hyun, Jessica Vu, Deyuan Xu, June Qu
