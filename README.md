@@ -6,8 +6,7 @@ This is a project for the course 03713: Bioinformatics Data Integration Practicu
 ## Workflow
 
 
-![alt text](https://github.com/JasonHyun/PracticumProject/data/pipeline_design.png)
-
+<img width="1440" alt="Screenshot 2025-04-16 at 10 11 25 PM" src="https://github.com/user-attachments/assets/2cb0ea41-148b-4420-ac51-17468663a215" />
 Mapping mouse open chromatin regions to human:
 The narrowpeak files containing mouse open chromatin regions were loaded into HALPER to map to human genome. At this step, HALPER tasks were submitted to and run on an RM-Shared node in PSC (Pittsburgh Supercomputing Center). For better computating efficiency, 16 cores and 32GB memory were requested. The open chromatin regions in mouse liver and pancreas were mapped into human genome.
 
@@ -17,6 +16,7 @@ An online tool, GREAT, was used to apply functional enrichment analysis. The ope
 ## Tools
 - HALPER (https://github.com/pfenninglab/halLiftover-postprocessing)
 - bedtools (https://bedtools.readthedocs.io/en/latest/)
+
 - GREAT (https://great.stanford.edu/great/public/html/)
 - MEME Suite (https://meme-suite.org/meme/)
 
