@@ -18,8 +18,7 @@ cd /ocean/projects/bio230007p/jqu1/meme_chip/
 # Input FASTA 
 input="/ocean/projects/bio230007p/jqu1/bedtools_closest/seqs/liver_species_enhancers_seq_unique.fa"
 
-# # Optional background model generated with fasta-get-markov
-# # (set to empty if not using)
+# background model generated with fasta-get-markov
 # background="/ocean/projects/bio230007p/jqu1/background_models/human_enhancer_background_model.txt"
 
 # Output directory
