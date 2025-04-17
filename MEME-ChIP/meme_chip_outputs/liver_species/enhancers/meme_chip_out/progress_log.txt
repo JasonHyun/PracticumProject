@@ -1,0 +1,62 @@
+Invoking:
+  getsize meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa 1> $metrics
+Finished invoke:
+  name: count_seqs  status: 0  time: 0.033874
+Invoking:
+  fasta-most -min 50 < meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa 1> $metrics
+Finished invoke:
+  name: most_seqs  status: 0  time: 0.060887
+Invoking:
+  fasta-center -dna -len 100 < meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa 1> meme_chip_out/seqs-centered
+Finished invoke:
+  name: center_seqs  status: 0  time: 0.077904
+Invoking:
+  fasta-get-markov -nostatus -nosummary -dna -m 2 meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa meme_chip_out/background
+Finished invoke:
+  name: bg  status: 0  time: 0.071395
+Invoking:
+  meme meme_chip_out/seqs-centered -oc meme_chip_out/meme_out -mod zoops -nmotifs 3 -minw 6 -maxw 20 -bfile meme_chip_out/background -dna -revcomp -nostatus
+Finished invoke:
+  name: meme  status: 0  time: 988.181966
+Invoking:
+  streme --verbosity 1 --oc meme_chip_out/streme_out -dna --p meme_chip_out/seqs-centered --minw 6 --maxw 20 --order 2
+Finished invoke:
+  name: streme  status: 0  time: 64.030778
+Invoking:
+  centrimo -seqlen 248 -verbosity 1 -oc meme_chip_out/centrimo_out -bfile meme_chip_out/background meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa meme_chip_out/meme_out/meme.xml meme_chip_out/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: centrimo  status: 256  time: 0.721645
+Invoking:
+  tomtom -verbosity 1 -oc meme_chip_out/meme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc meme_chip_out/meme_out/meme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: meme_tomtom  status: 0  time: 12.479648
+Invoking:
+  tomtom -verbosity 1 -oc meme_chip_out/streme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc meme_chip_out/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: streme_tomtom  status: 0  time: 16.485168
+Invoking:
+  tomtom -verbosity 1 -text -thresh 0.1 meme_chip_out/combined.meme meme_chip_out/combined.meme 1> meme_chip_out/motif_alignment.txt
+Finished invoke:
+  name: align  status: 0  time: 0.054445
+Invoking:
+  spamo -verbosity 1 -oc meme_chip_out/spamo_out_1 -bgfile meme_chip_out/background -keepprimary -primary DRCCASYAGRKGGC meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa meme_chip_out/meme_out/meme.xml meme_chip_out/meme_out/meme.xml meme_chip_out/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.926063
+Invoking:
+  spamo -verbosity 1 -oc meme_chip_out/spamo_out_1 -bgfile meme_chip_out/background -keepprimary -primary AAAAWWAAAAAAAAA meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa meme_chip_out/meme_out/meme.xml meme_chip_out/meme_out/meme.xml meme_chip_out/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.37518
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc meme_chip_out/fimo_out_1 --bgfile meme_chip_out/background --motif DRCCASYAGRKGGC meme_chip_out/meme_out/meme.xml meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa
+Finished invoke:
+  name: fimo1  status: 0  time: 0.517101
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc meme_chip_out/fimo_out_2 --bgfile meme_chip_out/background --motif AAAAWWAAAAAAAAA meme_chip_out/meme_out/meme.xml meme_chip_out/liver_species_enhancers_seq_unique_headers_v2.fa
+Finished invoke:
+  name: fimo2  status: 0  time: 0.426002
+Writing output
+Invoking:
+  meme-chip_html_to_tsv meme_chip_out/meme-chip.html meme_chip_out/summary.tsv "meme-chip -oc meme_chip_out -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/liver_species_enhancers_seq_unique_headers_v2.fa" 5.4.1 "Sat Aug 21 19\:23\:23 2021 -0700"
+Finished invoke:
+  name: summary  status: 0  time: 0.090585
+Done
