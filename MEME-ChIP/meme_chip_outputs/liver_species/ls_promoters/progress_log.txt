@@ -1,0 +1,70 @@
+Invoking:
+  getsize meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa 1> $metrics
+Finished invoke:
+  name: count_seqs  status: 0  time: 0.040702
+Invoking:
+  fasta-most -min 50 < meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa 1> $metrics
+Finished invoke:
+  name: most_seqs  status: 0  time: 0.047901
+Invoking:
+  fasta-center -dna -len 100 < meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa 1> meme_chip_out_liver_species_promoters/seqs-centered
+Finished invoke:
+  name: center_seqs  status: 0  time: 0.056874
+Invoking:
+  fasta-get-markov -nostatus -nosummary -dna -m 2 meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa meme_chip_out_liver_species_promoters/background
+Finished invoke:
+  name: bg  status: 0  time: 0.009117
+Invoking:
+  meme meme_chip_out_liver_species_promoters/seqs-centered -oc meme_chip_out_liver_species_promoters/meme_out -mod zoops -nmotifs 3 -minw 6 -maxw 20 -bfile meme_chip_out_liver_species_promoters/background -dna -revcomp -nostatus
+Finished invoke:
+  name: meme  status: 0  time: 652.125953
+Invoking:
+  streme --verbosity 1 --oc meme_chip_out_liver_species_promoters/streme_out -dna --p meme_chip_out_liver_species_promoters/seqs-centered --minw 6 --maxw 20 --order 2
+Finished invoke:
+  name: streme  status: 0  time: 5.98759
+Invoking:
+  centrimo -seqlen 309 -verbosity 1 -oc meme_chip_out_liver_species_promoters/centrimo_out -bfile meme_chip_out_liver_species_promoters/background meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: centrimo  status: 256  time: 0.667026
+Invoking:
+  tomtom -verbosity 1 -oc meme_chip_out_liver_species_promoters/meme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc meme_chip_out_liver_species_promoters/meme_out/meme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: meme_tomtom  status: 0  time: 16.740158
+Invoking:
+  tomtom -verbosity 1 -oc meme_chip_out_liver_species_promoters/streme_tomtom_out -min-overlap 5 -dist pearson -evalue -thresh 1 -no-ssc meme_chip_out_liver_species_promoters/streme_out/streme.xml /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt
+Finished invoke:
+  name: streme_tomtom  status: 0  time: 6.081501
+Invoking:
+  tomtom -verbosity 1 -text -thresh 0.1 meme_chip_out_liver_species_promoters/combined.meme meme_chip_out_liver_species_promoters/combined.meme 1> meme_chip_out_liver_species_promoters/motif_alignment.txt
+Finished invoke:
+  name: align  status: 0  time: 0.068976
+Invoking:
+  spamo -verbosity 1 -oc meme_chip_out_liver_species_promoters/spamo_out_1 -bgfile meme_chip_out_liver_species_promoters/background -keepprimary -primary RSYGCCMYCTRSTGG meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.301168
+Invoking:
+  spamo -verbosity 1 -oc meme_chip_out_liver_species_promoters/spamo_out_1 -bgfile meme_chip_out_liver_species_promoters/background -keepprimary -primary SCCSSSCCCSSCSCCGCCSC meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.496898
+Invoking:
+  spamo -verbosity 1 -oc meme_chip_out_liver_species_promoters/spamo_out_1 -bgfile meme_chip_out_liver_species_promoters/background -keepprimary -primary HWDTWWAHAATHAAHAWTDW meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/streme_out/streme.xml
+Finished invoke:
+  name: spamo1  status: 256  time: 0.282614
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc meme_chip_out_liver_species_promoters/fimo_out_1 --bgfile meme_chip_out_liver_species_promoters/background --motif RSYGCCMYCTRSTGG meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa
+Finished invoke:
+  name: fimo1  status: 0  time: 0.191431
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc meme_chip_out_liver_species_promoters/fimo_out_2 --bgfile meme_chip_out_liver_species_promoters/background --motif SCCSSSCCCSSCSCCGCCSC meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa
+Finished invoke:
+  name: fimo2  status: 0  time: 0.194955
+Invoking:
+  fimo --parse-genomic-coord --verbosity 1 --oc meme_chip_out_liver_species_promoters/fimo_out_3 --bgfile meme_chip_out_liver_species_promoters/background --motif HWDTWWAHAATHAAHAWTDW meme_chip_out_liver_species_promoters/meme_out/meme.xml meme_chip_out_liver_species_promoters/liver_species_promoters_seq_unique_headers_v2.fa
+Finished invoke:
+  name: fimo3  status: 0  time: 0.195069
+Writing output
+Invoking:
+  meme-chip_html_to_tsv meme_chip_out_liver_species_promoters/meme-chip.html meme_chip_out_liver_species_promoters/summary.tsv "meme-chip -oc meme_chip_out_liver_species_promoters -dna -meme-mod zoops -meme-nmotifs 3 -minw 6 -maxw 20 -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt /ocean/projects/bio230007p/jqu1/bedtools_closest/seqs/liver_species_promoters_seq_unique_headers_v2.fa" 5.4.1 "Sat Aug 21 19\:23\:23 2021 -0700"
+Finished invoke:
+  name: summary  status: 0  time: 0.089625
+Done
