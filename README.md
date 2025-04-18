@@ -31,7 +31,12 @@ NOTE: the use of the packages as HALPER, bedtools, and MEME Suite are done throu
 - GREAT (https://great.stanford.edu/great/public/html/)
 - MEME Suite (https://meme-suite.org/meme/)
 
-  
+## References
+1. MEME: Timothy L. Bailey, Mikael Boden, Fabian A. Buske, Martin Frith, Charles E. Grant, Luca Clementi, Jingyuan Ren, Wilfred W. Li, William S. Noble, MEME Suite: tools for motif discovery and searching, Nucleic Acids Research, Volume 37, Issue suppl_2, 1 July 2009, Pages W202–W208, https://doi.org/10.1093/nar/gkp335
+2. Bedtools: Aaron R. Quinlan, Ira M. Hall, BEDTools: a flexible suite of utilities for comparing genomic features, Bioinformatics, Volume 26, Issue 6, March 2010, Pages 841–842, https://doi.org/10.1093/bioinformatics/btq033
+3. Halper: Xiaoyu Zhang, Irene Kaplow, Morgan Wirthlin, Tyler Park, Andreas Pfenning. HALPER facilitates the identification of regulatory element orthologs across species. Bioinformatics, Volume 36, Issue 15, 1 August 2020, Pages 4339-4340.
+4. GREAT: McLean, C., Bristor, D., Hiller, M. et al. GREAT improves functional interpretation of cis-regulatory regions. Nat Biotechnol 28, 495–501 (2010). https://doi.org/10.1038/nbt.1630
+
 
 
 ## Contributors
