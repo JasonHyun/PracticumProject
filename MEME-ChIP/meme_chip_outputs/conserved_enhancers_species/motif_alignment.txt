@@ -1,0 +1,10 @@
+Query_ID	Target_ID	Optimal_offset	p-value	E-value	q-value	Overlap	Query_consensus	Target_consensus	Orientation
+1	1	0	4.53948e-28	1.36184e-27	2.72369e-27	15	CCACCAGAGGGCACT	CCACCAGAGGGCACT	+
+1	2	0	2.99124e-22	8.97373e-22	8.97373e-22	15	CCACCAGAGGGCACT	CCACTAGAGGGCACTATAG	+
+2	2	0	1.77955e-36	5.33865e-36	1.06773e-35	19	CCACTAGAGGGCACTATAG	CCACTAGAGGGCACTATAG	+
+2	1	0	1.40241e-22	4.20724e-22	4.20724e-22	15	CCACTAGAGGGCACTATAG	CCACCAGAGGGCACT	+
+3	3	0	3.86187e-40	1.15856e-39	2.31712e-39	20	TTTTTTTTTTTTTTTTTTTT	TTTTTTTTTTTTTTTTTTTT	+
+
+# Tomtom (Motif Comparison Tool): Version 5.4.1 compiled on Jan 24 2022 at 13:05:33
+# The format of this file is described at https://meme-suite.org/meme/doc/tomtom-output-format.html.
+# tomtom -verbosity 1 -text -thresh 0.1 liver_species/combined.meme liver_species/combined.meme

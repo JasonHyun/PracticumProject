@@ -1,0 +1,13 @@
+prim_db	prim_id	prim_alt	prim_cons	sec_db	sec_id	sec_alt	sec_cons	trim_left	trim_right	red_db	red_id	red_alt	E-value	gap	orient	count	total	adj_p-value	p-value
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	3-AAGAAAAAAAAAAAAA	STREME-3	AAGAAAAAAAAAAAAA	0	0	.	.	.	2.70e-01	9	3	10	982	2.28e-06	2.05e-05
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	0	0	.	.	.	5.46e+00	102	5	6	263	7.35e-02	4.97e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	7-WAATAAATA	STREME-7	WAATAAATA	0	0	.	.	.	6.14e+00	32	8	10	399	8.67e-02	5.58e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	8-GAAGCAAATG	STREME-8	GAAGCAAATG	0	0	.	.	.	6.88e+00	46	7	4	114	1.03e-01	6.25e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	1-CCASYAGRKGGCRSYVKDG	STREME-1	CCASYAGRKGGCRSYVKDG	0	4	.	.	.	7.74e+00	59	0	4	234	1.26e-01	7.04e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	2-CAAAGKTCAMWG	STREME-2	CAAAGKTCAMWG	0	0	.	.	.	8.19e+00	55	1	5	421	1.41e-01	7.45e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	streme.xml	5-GGGAGGGAGGGRAK	STREME-5	GGGAGGGAGGGRAK	0	0	.	.	.	8.38e+00	114	1	4	246	1.47e-01	7.61e-01
+meme.xml	TKNBTBTTTKTWTTTBTWTT	MEME-2	TKNBTBTTTKTWTTTBTWTT	meme.xml	CCASYAGRKGGCRSY	MEME-1	CCASYAGRKGGCRSY	0	0	.	.	.	9.16e+00	39	2	4	260	1.80e-01	8.33e-01
+
+# SpaMo (Spaced Motif Analysis Tool): Version 5.4.1 compiled on Jan 24 2022 at 13:05:30
+# The format of this file is described at https://meme-suite.org/meme/doc/spamo-output-format.html.
+# spamo -verbosity 1 -oc liver_species/spamo_out_1 -bgfile liver_species/background -keepprimary -primary TKNBTBTTTKTWTTTBTWTT liver_species/conserved_liver_species_enhancers_seq_uniq.fa liver_species/meme_out/meme.xml liver_species/meme_out/meme.xml liver_species/streme_out/streme.xml
