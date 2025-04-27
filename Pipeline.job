@@ -1,0 +1,205 @@
+#!/bin/bash
+
+###########################################################
+# This is a pipeline to run all code-based tasks for our  #
+# final project. Note that this pipeline may take more    #
+# than 24 hrs to finish. Use command "squeue -u [usrname] #
+# to check the status of the tasks running on PSC.        #
+# Members: Deyuan Xu, June Qu, Jason Hyun, Jessica Vu     #
+# *Make sure you have access permission to all 4 members' #
+# home directory before running this pipeline             #
+# Tissues studied: Liver & Pancreas                       #
+# Species involved: Mouse & Human                         #
+###########################################################
+
+###########################################################
+#Usage: put this script in the same directory where all the
+#peak files are placed. Run this pipeline. A HALPER must
+#be installed in your environment
+###########################################################
+
+#SBATCH -p RM-shared
+#SBATCH -t 48:00:00
+#SBATCH --mem 1999M
+#SBATCH -n 16
+#SBATCH --account bio230007p
+#SBATCH -J Project_Pipeline
+#SBATCH -e ./pipeline.err
+#SBATCH -o ./pipeline.out
+#SBATCH --export=ALL
+
+#echo commands to stdout
+set -x
+
+###########################################################
+# Map mouse liver OCRs to human genome
+###########################################################
+
+bash halper_map_peak_orthologs.sh \
+-b ./mouse_liver_idr.conservative_peak.narrowPeak \
+-o ./mapping_mouse2human/liver \
+-s Mouse \
+-t Human \
+-c /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
+
+###########################################################
+# Map mouse pancreas OCRs to human genome
+###########################################################
+bash halper_map_peak_orthologs.sh \
+-b ./mouse_pancreas_idr.conservative_peak.narrowPeak \
+-o ./mapping_mouse2human/pancreas \
+-s Mouse \
+-t Human \
+-c /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
+
+###########################################################
+# Extract unique and conservative peaks across species or across tissues
+###########################################################
+bash /ocean/projects/bio230007p/dxua/code/intersection.sh
+
+#sleep for a while to wait for interestion to be done on PSC
+sleep 1800
+
+###########################################################
+# Find enhancer and promoter regions
+###########################################################
+
+# input: .gz file (or .bed file directly) of genomic regions to separate out enhancer and promoters
+
+input1="/ocean/projects/bio230007p/jqu1/MouseAtac/Pancreas/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.gz"
+input="/ocean/projects/bio230007p/jqu1/MouseAtac/Pancreas/peak/idr_reproducibility/idr.conservative_peak.narrowPeak.bed"
+
+# Decompress file
+gunzip -c "$input1" > "$input"
+
+TSS="/ocean/projects/bio230007p/jqu1/mouse_genome/gencode.vM15.annotation.protTranscript.geneNames_TSSWithStrand_sorted.bed"
+
+sortedInput="mouse_pancreas_full_peak_unique_sorted.bed"
+bedtools sort -i "$input" > "$sortedInput"
+
+# Promoters (within 1kb)
+bedtools window -a "$sortedInput" -b "$TSS" -w 1000 > mouse_pancreas_full_peak_promoters_1kb.bed
+
+# Enhancers (within 5kb-200kb)
+bedtools closest -a "$sortedInput" -b "$TSS" -D a > mouse_pancreas_tss_distance.bed
+
+awk '($NF <= -5000 && $NF >= -200000) || ($NF >= 5000 && $NF <= 200000)' \
+  mouse_pancreas_tss_distance.bed > mouse_pancreas_full_peak_enhancers_5kb_200kb.bed
+
+###########################################################
+# Get sequences of OCRs for MEME
+###########################################################
+# get enhancer/promoter sequences (mapped to human genome)
+genome="/ocean/projects/bio230007p/jqu1/human_genome/hg38.fa"
+regions="/ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_regions/pancreas_species_promoters_1kb.bed"
+output1="/ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_promoters_seq.fa"
+output2="/ocean/projects/bio230007p/jqu1/bedtools_closest/pancreas_species_seqs/pancreas_species_promoters_uniq.fa"
+
+bedtools getfasta -fi $genome \
+ -bed $regions -fo $output1
+
+ awk '
+  /^>/ {
+    if (++count[$0] == 1) {
+      header = $0;
+      getline seq;
+      seqs[header] = seq;
+    }
+  }
+  END {
+    for (h in count) {
+      if (count[h] == 1) {
+        print h "\n" seqs[h];
+      }
+    }
+  }
+' $output1 > $output2
+
+###########################################################
+# Calculate the percentatages of conserved OCRs
+###########################################################
+# Usage:
+# ./find_percent_intersection.sh enhancer1.bed promoter1.bed conserved.bed output_dir/
+
+# bash ./script/find_percent_conservation.sh \
+# /Users/junequ/PracticumProject/regulatory_elements/human_full_peak/pancreas/human_pancreas_full_peak_enhancers_5kb_200kb.bed \
+# /Users/junequ/PracticumProject/regulatory_elements/human_full_peak/pancreas/human_pancreas_full_peak_promoters_1kb.bed \
+# /Users/junequ/PracticumProject/bedtools/conserved_subset/results/species_pancreas.bed \
+# /Users/junequ/PracticumProject/conserved_reg_elements/across_species/
+
+# Input files
+ENHANCER1=/Users/junequ/PracticumProject/regulatory_elements/human_full_peak/pancreas/human_pancreas_full_peak_enhancers_5kb_200kb.bed    # Full set of enhancers
+PROMOTER1=/Users/junequ/PracticumProject/regulatory_elements/human_full_peak/pancreas/human_pancreas_full_peak_promoters_1kb.bed    # Full set of promoters
+CONSERVED=/Users/junequ/PracticumProject/bedtools/conserved_subset/results/species_pancreas.bed    # Conserved OCR region file
+OUTPUT_DIR=/Users/junequ/PracticumProject/conserved_reg_elements/across_species   # Output directory path (should end with /)
+
+# Make output directory file if not present
+mkdir -p "$OUTPUT_DIR"
+
+# Output files (change file name according to tissue-species combination)
+ENHANCER_SHARED="$OUTPUT_DIR/conserved_pancreas_enhancers.bed"
+PROMOTER_SHARED="$OUTPUT_DIR/conserved_pancreas_promoters.bed"
+SUMMARY_OUTPUT="$OUTPUT_DIR/pancreas_human2mouse"
+
+# Intersect full set of enhancers with conserved regions
+bedtools intersect -u -a "$ENHANCER1" -b "$CONSERVED" > "$ENHANCER_SHARED"
+NUM_REFERENCE_ENHANCER=$(wc -l < "$ENHANCER1")
+NUM_SHARED_ENHANCER=$(wc -l < "$ENHANCER_SHARED")
+
+# Intersect full set of promoters with conserved regions
+bedtools intersect -u -a "$PROMOTER1" -b "$CONSERVED" > "$PROMOTER_SHARED"
+NUM_REFERENCE_PROMOTER=$(wc -l < "$PROMOTER1")
+NUM_SHARED_PROMOTER=$(wc -l < "$PROMOTER_SHARED")
+
+# Percent of enhancers conserved
+if [ "$NUM_REFERENCE_ENHANCER" -gt 0 ]; then
+    ENHANCER_PCT=$(echo "scale=2; 100 * $NUM_SHARED_ENHANCER / $NUM_REFERENCE_ENHANCER" | bc)
+else
+    ENHANCER_PCT=0
+fi
+
+# Percent of promoters conserved
+if [ "$NUM_REFERENCE_PROMOTER" -gt 0 ]; then
+    PROMOTER_PCT=$(echo "scale=2; 100 * $NUM_SHARED_PROMOTER / $NUM_REFERENCE_PROMOTER" | bc)
+else
+    PROMOTER_PCT=0
+fi
+
+# Output results
+{
+    echo "Enhancer shared %: $ENHANCER_PCT"
+    echo "Promoter shared %: $PROMOTER_PCT"
+} > "$SUMMARY_OUTPUT"
+
+echo "Results saved to $SUMMARY_OUTPUT"
+echo "Shared enhancer regions saved to $ENHANCER_SHARED"
+echo "Shared promoter regions saved to $PROMOTER_SHARED"
+
+###########################################################
+# Usage of MEME for finding motifs
+###########################################################
+module load MEME-suite
+
+cd /ocean/projects/bio230007p/jqu1/meme_chip/
+
+# Input FASTA 
+input="/ocean/projects/bio230007p/jqu1/bedtools_closest/seqs/liver_species_enhancers_seq_unique.fa"
+
+# background model generated with fasta-get-markov
+# background="/ocean/projects/bio230007p/jqu1/background_models/human_enhancer_background_model.txt"
+
+# Output directory
+output_dir="meme_chip_out"
+mkdir -p $output_dir
+
+# Run meme-chip
+meme-chip -oc $output_dir \
+  -dna \
+  -meme-mod zoops \
+  -meme-nmotifs 3 \
+  -minw 6 \
+  -maxw 20 \
+  -db /ocean/projects/bio230007p/jqu1/motif_database/JASPAR2022_CORE_non-redundant_pfms_meme.txt \
+  $input
+
+
