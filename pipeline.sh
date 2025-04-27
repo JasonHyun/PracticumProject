@@ -1,11 +1,17 @@
 #!/bin/bash
 
-# Define variables
-PROJECT="/ocean/projects/bio230007p/jhyun"
+# Use the pre-defined $PROJECT variable (/ocean/projects/bio230007p/username)
+# Ensure the necessary subdirectories exist
 JOB_DIR="${PROJECT}/jobs"
 OUTPUT_DIR="${PROJECT}"
 
-echo "Starting peak intersection analyses..."
+echo "Starting peak intersection analyses in project directory: ${PROJECT}"
+
+# Check if job directory exists
+if [ ! -d "${JOB_DIR}" ]; then
+    echo "Error: Job directory ${JOB_DIR} not found!"
+    exit 1
+fi
 
 # Run species-specific comparisons first
 echo "Running species-specific intersections..."
@@ -25,3 +31,4 @@ sbatch --dependency=afterok:${species_pancreas_job} ${JOB_DIR}/human_pancreas_un
 sbatch --dependency=afterok:${species_pancreas_job} ${JOB_DIR}/mouse_pancreas_unique.job
 
 echo "All intersection jobs submitted. Use 'squeue -u $USER' to check status."
+echo "Results will be written to ${OUTPUT_DIR}"
