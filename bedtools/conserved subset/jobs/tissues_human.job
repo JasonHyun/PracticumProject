@@ -18,5 +18,5 @@ module load bedtools/2.30.0
 bedtools intersect \
 -a /ocean/projects/bio230007p/jhyun/narrowpeaks/liver_human/idr.conservative_peak.narrowPeak.gz \
 -b /ocean/projects/bio230007p/jhyun/narrowpeaks/pancreas_human/idr.conservative_peak.narrowPeak.gz \
--u
+-u | cut -f1-3
 

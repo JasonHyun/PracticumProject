@@ -17,4 +17,4 @@ module load bedtools/2.30.0
 
 bedtools intersect -v \
 -a /ocean/projects/bio230007p/jhyun/narrowpeaks/liver_mouse2human/idr.conservative_peak.MouseToHuman.HALPER.narrowPeak.gz \
--b /ocean/projects/bio230007p/jhyun/species_liver.bed 
+-b /ocean/projects/bio230007p/jhyun/species_liver.bed | cut -f1-3
