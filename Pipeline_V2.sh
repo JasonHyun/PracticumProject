@@ -26,9 +26,11 @@
 mouse_liver_peak=$1
 mouse_pancreas_peak=$2
 human_liver_peak=$3
-human_liver_peak=$4
+human_pancreas_peak=$4  # Fixed variable name
 
-
+# Create necessary directories
+mkdir -p $PROJECT/results/mapping_mouse2human/liver
+mkdir -p $PROJECT/results/mapping_mouse2human/pancreas
 
 ###########################################################
 # Map mouse liver OCRs to human genome
@@ -44,23 +46,23 @@ cat > "$job_filename" <<EOL
 #SBATCH -n 16
 #SBATCH --account bio230007p
 #SBATCH -J liver_job
-#SBATCH -e ./liver_pipeline.err
-#SBATCH -o ./liver_pipeline.out
+#SBATCH -e $PROJECT/results/liver_pipeline.err
+#SBATCH -o $PROJECT/results/liver_pipeline.out
 #SBATCH --export=ALL
 
 #echo commands to stdout
 set -x
 
 bash halper_map_peak_orthologs.sh \\
--b ./$1 \\
--o ./mapping_mouse2human/liver \\
+-b $mouse_liver_peak \\
+-o $PROJECT/results/mapping_mouse2human/liver \\
 -s Mouse \\
 -t Human \\
 -c /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
 EOL
 
 echo "job file created: $job_filename"
-sbtach ./liver.job
+sbatch ./liver.job  # Fixed typo: sbtach -> sbatch
 rm ./liver.job
 
 ###########################################################
@@ -77,42 +79,41 @@ cat > "$job_filename" <<EOL
 #SBATCH -n 16
 #SBATCH --account bio230007p
 #SBATCH -J pancreas_job
-#SBATCH -e ./pancreas_pipeline.err
-#SBATCH -o ./pancreas_pipeline.out
+#SBATCH -e $PROJECT/results/pancreas_pipeline.err
+#SBATCH -o $PROJECT/results/pancreas_pipeline.out
 #SBATCH --export=ALL
 
 #echo commands to stdout
 set -x
 
 bash halper_map_peak_orthologs.sh \\
--b ./$2 \\
--o ./mapping_mouse2human/pancreas \\
+-b $mouse_pancreas_peak \\
+-o $PROJECT/results/mapping_mouse2human/pancreas \\
 -s Mouse \\
 -t Human \\
 -c /ocean/projects/bio230007p/ikaplow/Alignments/10plusway-master.hal
 EOL
 
 echo "job file created: $job_filename"
-sbtach ./pancreas.job
+sbatch ./pancreas.job  # Fixed typo: sbtach -> sbatch
 rm ./pancreas.job
 
 ###########################################################
 # Wait until the HALPER is done
 ###########################################################
 
-# sleep for 5 hours before checking status because HALPER definetely needs
+# sleep for 5 hours before checking status because HALPER definitely needs
 # more than 5 hours
 
 echo "waiting for mapping to be done..."
 sleep 18000
 
-username="dxua"
+username=$(whoami)  # Get current username automatically
 
 # check task status every 10 minutes
 while true; do
     
     job_count=$(squeue -u "$username" | wc -l)
-
    
     job_count=$((job_count - 1))
 
@@ -129,34 +130,28 @@ done
 # Extract unique and conservative peaks across species or across tissues
 ###########################################################
 
-bash /ocean/projects/bio230007p/dxua/code/intersection.sh
-
+bash $PROJECT/code/intersection.sh
 
 ###########################################################
 # Find enhancer and promoter regions
 ###########################################################
 
-bash /ocean/projects/bio230007p/dxua/code/find_region.sh
-
+bash $PROJECT/code/find_region.sh
 
 ###########################################################
 # Get sequences of OCRs for MEME
 ###########################################################
 
-bash /ocean/projects/bio230007p/dxua/code/region2seq.sh
-
+bash $PROJECT/code/region2seq.sh
 
 ###########################################################
 # Calculate the percentatages of conserved OCRs
 ###########################################################
 
-bash /ocean/projects/bio230007p/dxua/code/find_percent_conservation.sh
+bash $PROJECT/code/find_percent_conservation.sh
 
 ###########################################################
 # Usage of MEME for finding motifs
 ###########################################################
 
-bash /ocean/projects/bio230007p/dxua/code/meme_chip.sh
-
-
-
+bash $PROJECT/code/meme_chip.sh
