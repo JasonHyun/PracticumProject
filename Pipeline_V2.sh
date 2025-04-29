@@ -136,7 +136,7 @@ bash $PROJECT/code/intersection.sh
 # Find enhancer and promoter regions
 ###########################################################
 
-bash $PROJECT/code/find_region.sh
+bash $PROJECT/code/reg_elements.sh
 
 ###########################################################
 # Get sequences of OCRs for MEME
