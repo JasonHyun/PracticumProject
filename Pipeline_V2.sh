@@ -139,19 +139,8 @@ bash $PROJECT/code/intersection.sh
 bash $PROJECT/code/reg_elements.sh
 
 ###########################################################
-# Get sequences of OCRs for MEME
+# Get sequences of OCRs for MEME and run MEME
 ###########################################################
 
-bash $PROJECT/code/region2seq.sh
+bash $PROJECT/code/motif.sh
 
-###########################################################
-# Calculate the percentatages of conserved OCRs
-###########################################################
-
-bash $PROJECT/code/find_percent_conservation.sh
-
-###########################################################
-# Usage of MEME for finding motifs
-###########################################################
-
-bash $PROJECT/code/meme_chip.sh
