@@ -32,7 +32,7 @@ To identify motifs in regulatory regions, OCRs were divided into potential enhan
 NOTE: Because the script relies on the MEME Suite module from the bridges2 server and outputs of Step 4, we are currently unable to get results for motif analysis, as the server is not available (5/1/2025, 7:40 p.m.)
 
 ## Using the Pipeline
-Before executing the pipeline, make sure that the `code` and `inputs` folders (along with the subdirectories and files inside) from the repository are properly uploaded to the $PROJECT pathway of the user on the bridges2 cluster. Also make sure that the main pipeline script, Pipeline_V2.sh, is under the $PROJECT pathway. 
+Before executing the pipeline, make sure that the `code` and `inputs` folders (along with the subdirectories and files inside) from the repository are properly uploaded to the $PROJECT pathway of the user on the bridges2 cluster. Also make sure that the main pipeline script, Pipeline_V2.sh, is under the $PROJECT pathway. Verify that the environment has HALPER properly installed.
 
 From the $PROJECT path on bridges2, execute the pipeline with the following command:
 
