@@ -12,16 +12,7 @@
 # Species involved: Mouse & Human                         #
 ###########################################################
 
-###########################################################
-#Usage: put this script in the same directory where all the
-#peak files are placed. Run this pipeline. A HALPER must
-#be installed in your environment. Please use the first
-#parameter to give a path to mouse liver peak file and the 
-#second parameter to give a path to mouse pancreas peak
-#file. Besides, use the third parameter to give a path to
-#the human liver peak file and the fourth parameter to 
-#give a human pancreas peak file.
-###########################################################
+# Please note the README for directions on running the pipeline.
 
 mouse_liver_peak=$1
 mouse_pancreas_peak=$2
